@@ -108,6 +108,11 @@ def run(settings: Settings, *, verify: bool = True, log=print) -> PipelineResult
     log(f"[persistence] {persist['timesteps']} timestep(s); "
         f"{persist['static_count']} static (island/rig), {persist['moving_count']} moving")
 
+    # Label resolution for un-verified candidates: moving = vessel, static = island.
+    for d in detections:
+        if d.get("label", "unverified") == "unverified":
+            d["label"] = "island" if d.get("is_static") else "vessel"
+
     series = count.vessel_timeseries(detections)
     meta = {"location": location, "scene_status": scene_status, "persistence": persist}
     artifacts.write_detections(settings, detections, meta=meta)

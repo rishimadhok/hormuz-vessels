@@ -100,6 +100,17 @@
       <p class="ml-note">Boxes are SAR-detected vessel candidates; zoom in to inspect each on satellite imagery.</p>
     </div>
 
+    <!-- News / signals panel (right side). Filled by map.js from data/news.json,
+         synced to the active stepper date. Hidden until data loads. -->
+    <aside class="news-panel" id="news-panel" hidden aria-label="News for active date">
+      <div class="news-head">
+        <span class="news-title">NEWS</span>
+        <span class="news-date" id="news-date"></span>
+      </div>
+      <div class="news-list" id="news-list"></div>
+      <p class="news-empty" id="news-empty" hidden>No news on/before this date.</p>
+    </aside>
+
     <!-- Hard failure message (shown only if Leaflet fails to load) -->
     <div class="map-error" id="map-error" hidden>
       <div class="map-error-inner">

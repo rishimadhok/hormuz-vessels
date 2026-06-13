@@ -280,6 +280,89 @@ html, body { height: 100%; }
 
 .ml-note { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
 
+/* ---------- news / signals panel (right side) ---------- */
+/* Starts below the Leaflet layer/zoom controls in the top-right so it never
+   overlaps them; scrolls vertically; capped width consistent with legend. */
+.news-panel {
+  position: absolute;
+  top: 92px;
+  right: 12px;
+  z-index: 1000;
+  width: 320px;
+  max-width: calc(100% - 24px);
+  max-height: calc(100% - 104px);
+  overflow-y: auto;
+  background: rgba(21,30,39,0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+  font-size: 12.5px;
+}
+.news-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.news-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent, #4ea8de);
+}
+.news-date {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.news-list { display: grid; gap: 10px; }
+.news-item {
+  padding: 8px 10px;
+  background: rgba(6,10,14,0.55);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.news-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 7px;
+  margin-bottom: 5px;
+}
+.news-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 999px;
+  flex: none;
+}
+.news-badge-news { background: var(--accent, #4ea8de); color: #06110a; }
+.news-badge-social { background: #b07cf0; color: #100617; }
+.news-itemdate {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.news-asof {
+  font-size: 10px;
+  font-style: italic;
+  color: var(--rig, #ff9f0a);
+}
+.news-source { font-size: 10.5px; color: var(--muted); }
+.news-headline { line-height: 1.35; margin-bottom: 4px; }
+.news-link { font-weight: 600; color: var(--text); text-decoration: none; }
+.news-link[href]:hover { text-decoration: underline; color: var(--accent, #4ea8de); }
+.news-link-plain { cursor: default; }
+.news-summary { margin: 0; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+.news-empty { margin: 0; font-size: 11.5px; color: var(--muted); }
+
 /* ---------- hard error overlay ---------- */
 .map-error {
   position: absolute;
@@ -304,4 +387,13 @@ html, body { height: 100%; }
 @media (max-width: 640px) {
   .map-legend { width: 210px; }
   .map-header .sub { display: none; }
+  /* On narrow screens, shrink the news panel and drop it to the bottom-right
+     so it never covers the whole map. */
+  .news-panel {
+    width: 200px;
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+    max-height: 40%;
+  }
 }

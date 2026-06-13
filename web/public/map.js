@@ -168,6 +168,89 @@
     panel.hidden = false;
   }
 
+  // ---- news / signals panel ---------------------------------------------
+  // Acquisition (stepper) dates rarely match a headline exactly, so the
+  // matching rule is: show all items dated EXACTLY on the active date; if
+  // none, fall back to the most recent item(s) ON OR BEFORE the active date
+  // (the prevailing/standing headline) and label them "as of <itemdate>".
+  // Items are kept sorted ascending by date in NEWS (set at load time).
+  function renderNews(activeDate) {
+    var panel = document.getElementById("news-panel");
+    if (!panel) return;
+    var listEl = document.getElementById("news-list");
+    var dateEl = document.getElementById("news-date");
+    var emptyEl = document.getElementById("news-empty");
+
+    // No data (fetch failed) => keep panel hidden, never break the map.
+    if (!Array.isArray(NEWS) || !NEWS.length) { panel.hidden = true; return; }
+    panel.hidden = false;
+
+    if (dateEl) dateEl.textContent = activeDate ? "— " + activeDate : "";
+
+    // Items exactly on the active date.
+    var exact = [];
+    var onOrBefore = [];
+    NEWS.forEach(function (it) {
+      if (!it || !it.date) return;
+      if (activeDate && it.date === activeDate) exact.push(it);
+      if (activeDate && it.date <= activeDate) onOrBefore.push(it);
+    });
+
+    var picked, asOf = false;
+    if (exact.length) {
+      picked = exact.slice(0, 3);
+    } else if (onOrBefore.length) {
+      // Most recent on/before: NEWS is ascending, so take from the tail.
+      // Show the most recent item plus any sharing that same (latest) date.
+      var latest = onOrBefore[onOrBefore.length - 1].date;
+      picked = onOrBefore.filter(function (it) { return it.date === latest; }).slice(0, 3);
+      asOf = true;
+    } else {
+      picked = [];
+    }
+
+    if (!picked.length) {
+      if (listEl) listEl.innerHTML = "";
+      if (emptyEl) emptyEl.hidden = false;
+      return;
+    }
+    if (emptyEl) emptyEl.hidden = true;
+
+    var html = picked.map(function (it) {
+      var isSocial = String(it.kind || "").toLowerCase() === "social";
+      var badge = isSocial ? "X" : "NEWS";
+      var badgeCls = isSocial ? "news-badge news-badge-social" : "news-badge news-badge-news";
+      var asOfHtml = asOf
+        ? '<span class="news-asof">as of ' + esc(it.date) + "</span>"
+        : "";
+      var srcHtml = it.source
+        ? '<span class="news-source">' + esc(it.source) + "</span>"
+        : "";
+      var headline = esc(it.headline || "(untitled)");
+      var headHtml = it.url
+        ? '<a class="news-link" href="' + esc(it.url) +
+          '" target="_blank" rel="noopener">' + headline + "</a>"
+        : '<span class="news-link news-link-plain">' + headline + "</span>";
+      var summaryHtml = it.summary
+        ? '<p class="news-summary">' + esc(it.summary) + "</p>"
+        : "";
+      return (
+        '<article class="news-item">' +
+        '<div class="news-meta">' +
+        '<span class="' + badgeCls + '">' + badge + "</span>" +
+        '<span class="news-itemdate">' + esc(it.date) + "</span>" +
+        asOfHtml +
+        srcHtml +
+        "</div>" +
+        '<div class="news-headline">' + headHtml + "</div>" +
+        summaryHtml +
+        "</article>"
+      );
+    }).join("");
+
+    if (listEl) listEl.innerHTML = html;
+  }
+
   // ---- multi-timestep date list -----------------------------------------
   // Source of truth for the steppable dates: persistence.dates, then a sorted
   // unique set of detection dates, then scene_status keys. Always non-empty
@@ -197,6 +280,7 @@
   var detLayer = null;        // L.layerGroup holding active-date detections
   var DATA = null;            // raw detections.json
   var OIL = null;             // raw oil.json (may stay null)
+  var NEWS = null;            // sorted news items from data/news.json (may stay null)
   var DATES = [];             // steppable date list
   var ACTIVE_IDX = 0;         // index into DATES
   var TIMESTEPS = 1;          // persistence.timesteps (or DATES.length)
@@ -291,6 +375,9 @@
 
     // Oil panel keyed off the active date.
     renderOil(OIL, date);
+
+    // News panel keyed off the same active date (lockstep with the stepper).
+    renderNews(date);
 
     // Stepper UI sync.
     var sel = document.getElementById("ds-select");
@@ -442,6 +529,21 @@
     .catch(function () { return null; })
     .then(function (oil) {
       OIL = oil; // may be null; renderOil handles that gracefully
+      // News is best-effort too: panel stays hidden if it fails.
+      return fetch("data/news.json", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    })
+    .then(function (news) {
+      var items = (news && Array.isArray(news.items)) ? news.items.slice() : null;
+      if (items) {
+        // Keep ascending by date so renderNews can scan/slice deterministically.
+        items.sort(function (a, b) {
+          var da = (a && a.date) || "", db = (b && b.date) || "";
+          return da < db ? -1 : (da > db ? 1 : 0);
+        });
+      }
+      NEWS = items; // may be null; renderNews handles that gracefully
       return fetch("artifacts/detections.json", { cache: "no-store" });
     })
     .then(function (r) {

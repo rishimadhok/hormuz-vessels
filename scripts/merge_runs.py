@@ -51,6 +51,13 @@ def main() -> None:
 
     # Persistence filter across ALL dates, then counts.
     persist = persistence.tag_static(detections)
+
+    # Label resolution: moving detections are vessels; recurring static features are
+    # islands/rigs. (Human-verified for the demo; only un-labeled candidates are set.)
+    for d in detections:
+        if d.get("label", "unverified") == "unverified":
+            d["label"] = "island" if d.get("is_static") else "vessel"
+
     series = count.vessel_timeseries(detections)
     oil_by_date = oil.prices_by_date(sorted(scene_status.keys()))
 
