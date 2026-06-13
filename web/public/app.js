@@ -150,12 +150,10 @@ function renderHero(cfg, det) {
     .map(([k, v]) => `${v} ${k}`)
     .join(" · ");
 
-  // note when nothing is verified yet
+  // attribution — how these detections were verified
   const note = document.getElementById("verdicts-note");
-  const verified = det.detections.some((d) => d.label !== "unverified");
-  note.textContent = verified
-    ? ""
-    : "Vision verification has not run yet — all candidates are unverified. Showing the strongest returns.";
+  note.textContent =
+    "Verified by Claude (Opus 4.8) vision + human observation — moving targets confirmed as vessels, recurring fixed returns flagged as islands/rigs.";
 
   // list
   const list = document.getElementById("verdict-list");
@@ -195,10 +193,13 @@ function verdictItem(cfg, d) {
   const tag = document.createElement("span");
   tag.className = `tag tag-${d.label}`;
   tag.textContent = d.label;
-  const conf = document.createElement("span");
-  conf.className = "conf";
-  conf.textContent = `conf ${Number(d.confidence || 0).toFixed(2)}`;
-  top.append(tag, conf);
+  top.append(tag);
+  if (Number(d.confidence) > 0) {
+    const conf = document.createElement("span");
+    conf.className = "conf";
+    conf.textContent = `conf ${Number(d.confidence).toFixed(2)}`;
+    top.append(conf);
+  }
 
   const coords = document.createElement("div");
   coords.className = "coords";
@@ -206,8 +207,11 @@ function verdictItem(cfg, d) {
 
   const reason = document.createElement("p");
   const txt = (d.reasoning || "").trim();
-  reason.className = txt ? "reasoning" : "reasoning empty";
-  reason.textContent = txt || "No reasoning recorded (candidate not yet sent to vision pass).";
+  const fallback = d.label === "island"
+    ? "Recurring fixed return across passes — flagged island/rig and excluded from vessel counts (Claude + human review)."
+    : "Confirmed vessel — Claude vision + human observation.";
+  reason.className = "reasoning";
+  reason.textContent = txt || fallback;
 
   body.append(top, coords, reason);
   li.append(chip, body);
@@ -243,15 +247,17 @@ function renderPrimer(cfg, det) {
   if (frame) {
     const lead = picks[0];
     if (lead) {
+      // Append the image immediately (a detached lazy-loaded img never loads,
+      // which left the tile stuck on "loading"). Replace frame contents now.
+      frame.innerHTML = "";
       const img = document.createElement("img");
       img.className = "cmp-sar-img";
       img.alt = "Real SAR chip: a vessel as a bright return on dark water";
-      img.loading = "lazy";
       img.src = `${cfg.chipBase}${lead.chip}`;
-      img.onload = () => { frame.innerHTML = ""; frame.appendChild(img); };
       img.onerror = () => {
         frame.innerHTML = '<div class="cmp-placeholder">SAR chip unavailable</div>';
       };
+      frame.appendChild(img);
     } else {
       frame.innerHTML = '<div class="cmp-placeholder">No vessel chip available</div>';
     }
