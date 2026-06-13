@@ -111,6 +111,21 @@
       <p class="news-empty" id="news-empty" hidden>No news on/before this date.</p>
     </aside>
 
+    <!-- SAR scene panel (right side, stacked below the news panel). Shows the
+         actual annotated Sentinel-1 overlay PNG for the active stepper date.
+         Filled by map.js renderScene(); hidden until data loads. -->
+    <aside class="scene-panel" id="scene-panel" hidden aria-label="SAR scene for active date">
+      <div class="scene-head">
+        <span class="scene-title">SAR SCENE</span>
+        <span class="scene-date" id="scene-date"></span>
+      </div>
+      <a class="scene-link" id="scene-link" href="#" target="_blank" rel="noopener">
+        <img class="scene-img" id="scene-img" alt="Annotated Sentinel-1 SAR scene with vessel detections" />
+      </a>
+      <p class="scene-caption" id="scene-caption" hidden></p>
+      <p class="scene-empty" id="scene-empty" hidden>No SAR scene for this date.</p>
+    </aside>
+
     <!-- Hard failure message (shown only if Leaflet fails to load) -->
     <div class="map-error" id="map-error" hidden>
       <div class="map-error-inner">

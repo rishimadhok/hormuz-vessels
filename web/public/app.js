@@ -214,7 +214,73 @@ function verdictItem(cfg, d) {
   return li;
 }
 
-// --- SECTION 2: traffic vs. price chart -------------------------------------
+// --- SECTION 2: "Why SAR?" primer -------------------------------------------
+// Picks real vessel chips from detections.json: one strong example for the
+// EO-vs-SAR comparison tile, plus a handful for the "what ships look like" row.
+// Prefers brighter / larger returns so the bright-blob signature is obvious.
+// Degrades gracefully: if a chip fails to load it's removed; if none load the
+// black EO tile + a captioned placeholder remain so the section never breaks.
+function pickGalleryVessels(dets, n) {
+  const vessels = dets.filter((d) => d.label === "vessel" && d.chip);
+  vessels.sort((a, b) =>
+    (b.max_intensity || 0) - (a.max_intensity || 0) ||
+    (b.area_px || 0) - (a.area_px || 0));
+  // Spread picks across the sorted list for visual variety, not 6 near-identical blobs.
+  if (vessels.length <= n) return vessels;
+  const top = vessels.slice(0, Math.min(vessels.length, n * 4));
+  const step = Math.max(1, Math.floor(top.length / n));
+  const out = [];
+  for (let i = 0; i < top.length && out.length < n; i += step) out.push(top[i]);
+  return out.slice(0, n);
+}
+
+function renderPrimer(cfg, det) {
+  const dets = (det && det.detections) || [];
+  const picks = pickGalleryVessels(dets, 6);
+
+  // (1) EO-vs-SAR comparison: drop the strongest vessel into the SAR tile.
+  const frame = document.getElementById("cmp-sar-frame");
+  if (frame) {
+    const lead = picks[0];
+    if (lead) {
+      const img = document.createElement("img");
+      img.className = "cmp-sar-img";
+      img.alt = "Real SAR chip: a vessel as a bright return on dark water";
+      img.loading = "lazy";
+      img.src = `${cfg.chipBase}${lead.chip}`;
+      img.onload = () => { frame.innerHTML = ""; frame.appendChild(img); };
+      img.onerror = () => {
+        frame.innerHTML = '<div class="cmp-placeholder">SAR chip unavailable</div>';
+      };
+    } else {
+      frame.innerHTML = '<div class="cmp-placeholder">No vessel chip available</div>';
+    }
+  }
+
+  // (2) Gallery row of real vessel chips.
+  const gal = document.getElementById("chip-gallery");
+  if (gal) {
+    gal.innerHTML = "";
+    const galPicks = picks.length ? picks : [];
+    if (!galPicks.length) {
+      gal.innerHTML = '<li class="muted small">No vessel chips available in this run.</li>';
+    }
+    for (const d of galPicks) {
+      const li = document.createElement("li");
+      li.className = "chip-cell";
+      const img = document.createElement("img");
+      img.className = "gallery-chip";
+      img.alt = "SAR vessel chip — bright return on dark water";
+      img.loading = "lazy";
+      img.src = `${cfg.chipBase}${d.chip}`;
+      img.onerror = () => { li.remove(); };   // drop broken chips, keep the row clean
+      li.appendChild(img);
+      gal.appendChild(li);
+    }
+  }
+}
+
+// --- SECTION 3: traffic vs. price chart -------------------------------------
 // Pull moving_count per date — the vessel estimate. Older artifacts only carry
 // candidate_count/vessel_count, so degrade gracefully to the next-best field.
 function movingSeries(series) {
@@ -397,7 +463,7 @@ function renderSvgFallback(canvas, labels, values) {
   canvas.replaceWith(div.firstElementChild);
 }
 
-// --- SECTION 3: analyst brief (tiny markdown renderer) ----------------------
+// --- SECTION 5: analyst brief (tiny markdown renderer) ----------------------
 function renderBrief(md) {
   const el = document.getElementById("brief-body");
   if (md == null) {
@@ -462,7 +528,7 @@ function escapeHTML(s) {
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-// --- SECTION 3: signals — news & market -------------------------------------
+// --- SECTION 4: signals — news & market -------------------------------------
 // Brent on/near a date = nearest oil entry on-or-before that date. Returns
 // { brent, date } or null when no entry exists on or before the news date.
 function brentOnOrBefore(oil, date) {
@@ -585,6 +651,7 @@ function renderRunMeta(det) {
   if (det && det.detections) {
     renderRunMeta(det);
     renderHero(cfg, det);
+    renderPrimer(cfg, det);
   } else {
     document.getElementById("overlay-fallback").hidden = false;
     document.getElementById("overlay-img").hidden = true;

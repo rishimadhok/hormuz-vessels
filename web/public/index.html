@@ -69,11 +69,82 @@
       </div>
     </section>
 
-    <!-- ============ SECTION 2: TRAFFIC CHART ============ -->
+    <!-- ============ SECTION 2: WHY SAR? — primer ============ -->
+    <section id="primer" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>2 · What you're looking at — radar, not a camera</h2>
+          <p class="lede">
+            Every ship above is found in <strong>radar</strong> imagery, not a normal photo.
+            Here's why that matters — and why a regular satellite camera would see nothing here at night.
+          </p>
+        </div>
+
+        <div class="primer-grid">
+          <!-- Left: the explainer -->
+          <div class="primer-explain">
+            <ul class="primer-points">
+              <li>
+                <span class="pp-key">SAR = Synthetic Aperture Radar.</span>
+                The satellite sends its <em>own</em> microwave pulses down at the sea and listens for the
+                echo. It makes its own "light," so it doesn't need the sun.
+              </li>
+              <li>
+                <span class="pp-key">A normal satellite camera is just a camera.</span>
+                Optical / EO sensors need daylight and clear skies. At night, or through cloud, haze,
+                and smoke, they see nothing.
+              </li>
+              <li>
+                <span class="pp-key">Ships move at night — and can go "dark."</span>
+                Vessels can switch off their AIS transponder to avoid being tracked. That's exactly when
+                a camera is blind, and exactly when watching the strait matters most.
+              </li>
+              <li>
+                <span class="pp-key">Metal ships are bright radar reflectors.</span>
+                Calm water bounces radar away (it looks black); a steel hull throws the signal straight
+                back. So on SAR a ship shows up as a bright blob or streak on a near-black sea —
+                day or night, through clouds. That's why this whole platform runs on SAR.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: EO vs SAR at night -->
+          <div class="primer-compare" id="primer-compare">
+            <p class="primer-compare-title">Same patch of sea, same night</p>
+            <div class="compare-tiles">
+              <figure class="cmp-tile cmp-eo">
+                <div class="cmp-frame cmp-frame-eo">
+                  <span class="cmp-moon" aria-hidden="true">☾</span>
+                  <span class="cmp-x" aria-hidden="true">✕</span>
+                  <span class="cmp-eo-caption">no sunlight<br>nothing visible</span>
+                </div>
+                <figcaption><span class="cmp-tag">Optical camera · night</span></figcaption>
+              </figure>
+              <figure class="cmp-tile cmp-sar">
+                <div class="cmp-frame cmp-frame-sar" id="cmp-sar-frame">
+                  <!-- a real SAR vessel chip is injected here by app.js -->
+                  <div class="cmp-placeholder">SAR chip loading…</div>
+                </div>
+                <figcaption><span class="cmp-tag tag-sar">SAR · same night</span> the ship lights up on radar</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery: what ships look like to radar -->
+        <div class="primer-gallery">
+          <h3 class="primer-gallery-title">What ships look like to radar</h3>
+          <p class="muted small primer-gallery-sub">Real vessel detections from this run — learn to spot the bright-blob signature on dark water.</p>
+          <ul id="chip-gallery" class="chip-gallery"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3: TRAFFIC CHART ============ -->
     <section id="traffic" class="section">
       <div class="wrap">
         <div class="section-head">
-          <h2>2 · Traffic vs. price over time</h2>
+          <h2>3 · Traffic vs. price over time</h2>
           <p class="lede">
             Detected moving vessels per Sentinel-1 pass against Brent crude.
             Vertical markers flag timeline events (strait open / closed / incident).
@@ -88,11 +159,11 @@
       </div>
     </section>
 
-    <!-- ============ SECTION 3: SIGNALS — news & market ============ -->
+    <!-- ============ SECTION 4: SIGNALS — news & market ============ -->
     <section id="signals" class="section">
       <div class="wrap">
         <div class="section-head">
-          <h2>3 · Signals — news &amp; market</h2>
+          <h2>4 · Signals — news &amp; market</h2>
           <p class="lede">Headlines that moved the market, aligned to detected traffic and Brent crude.</p>
         </div>
         <ul id="news-feed" class="news-feed"></ul>
@@ -100,11 +171,11 @@
       </div>
     </section>
 
-    <!-- ============ SECTION 4: ANALYST BRIEF ============ -->
+    <!-- ============ SECTION 5: ANALYST BRIEF ============ -->
     <section id="brief" class="section">
       <div class="wrap">
         <div class="section-head">
-          <h2>4 · Analyst brief</h2>
+          <h2>5 · Analyst brief</h2>
         </div>
         <article id="brief-body" class="brief-body">
           <p class="muted">Loading brief…</p>

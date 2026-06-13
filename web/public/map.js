@@ -251,6 +251,81 @@
     if (listEl) listEl.innerHTML = html;
   }
 
+  // ---- SAR scene panel --------------------------------------------------
+  // Shows the actual annotated Sentinel-1 overlay PNG for the active date.
+  // Picks the scene_id of the detection on that date with the most detections
+  // (ties broken by first seen). Loads artifacts/chips/<scene_id>_overlay.png.
+  // Graceful: no detection for the date OR image 404 => muted empty message.
+  function sceneIdForDate(activeDate) {
+    if (!activeDate || !DATA || !Array.isArray(DATA.detections)) return null;
+    var counts = {};
+    var order = [];
+    DATA.detections.forEach(function (d) {
+      if (!d || d.date !== activeDate || !d.scene_id) return;
+      if (!(d.scene_id in counts)) { counts[d.scene_id] = 0; order.push(d.scene_id); }
+      counts[d.scene_id]++;
+    });
+    var best = null, bestN = -1;
+    order.forEach(function (sid) {
+      if (counts[sid] > bestN) { bestN = counts[sid]; best = sid; }
+    });
+    return best;
+  }
+
+  function renderScene(activeDate) {
+    var panel = document.getElementById("scene-panel");
+    if (!panel) return;
+    var dateEl = document.getElementById("scene-date");
+    var linkEl = document.getElementById("scene-link");
+    var imgEl = document.getElementById("scene-img");
+    var capEl = document.getElementById("scene-caption");
+    var emptyEl = document.getElementById("scene-empty");
+
+    panel.hidden = false;
+    if (dateEl) dateEl.textContent = activeDate ? "— " + activeDate : "";
+
+    var sid = sceneIdForDate(activeDate);
+
+    // No scene for this date: show muted message, hide image.
+    if (!sid) {
+      if (imgEl) { imgEl.removeAttribute("src"); imgEl.style.display = "none"; }
+      if (linkEl) { linkEl.style.display = "none"; linkEl.removeAttribute("href"); }
+      if (capEl) capEl.hidden = true;
+      if (emptyEl) emptyEl.hidden = false;
+      return;
+    }
+
+    var src = "artifacts/chips/" + sid + "_overlay.png";
+    if (linkEl) {
+      linkEl.style.display = "";
+      linkEl.href = src;
+    }
+    if (imgEl) {
+      imgEl.style.display = "";
+      // onerror (e.g. overlay 404s): hide image + link, show muted message.
+      imgEl.onerror = function () {
+        imgEl.style.display = "none";
+        if (linkEl) linkEl.style.display = "none";
+        if (capEl) capEl.hidden = true;
+        if (emptyEl) emptyEl.hidden = false;
+      };
+      imgEl.onload = function () {
+        imgEl.style.display = "";
+        if (linkEl) linkEl.style.display = "";
+        if (capEl) capEl.hidden = false;
+        if (emptyEl) emptyEl.hidden = true;
+      };
+      imgEl.src = src;
+    }
+    if (capEl) {
+      capEl.textContent =
+        "Sentinel-1 radar image, " + activeDate +
+        " — bright marks are detected vessels; boxes are detections.";
+      capEl.hidden = false;
+    }
+    if (emptyEl) emptyEl.hidden = true;
+  }
+
   // ---- multi-timestep date list -----------------------------------------
   // Source of truth for the steppable dates: persistence.dates, then a sorted
   // unique set of detection dates, then scene_status keys. Always non-empty
@@ -378,6 +453,9 @@
 
     // News panel keyed off the same active date (lockstep with the stepper).
     renderNews(date);
+
+    // SAR scene overlay panel, same active date (lockstep with the stepper).
+    renderScene(date);
 
     // Stepper UI sync.
     var sel = document.getElementById("ds-select");
