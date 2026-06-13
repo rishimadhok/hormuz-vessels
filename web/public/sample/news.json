@@ -1,0 +1,53 @@
+{
+  "_note": "SAMPLE DATA — synthetic closure-related headlines for demo only",
+  "items": [
+    {
+      "date": "2026-01-22",
+      "headline": "Iran warns of Hormuz response as Gulf tensions simmer",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/world/middle-east/",
+      "kind": "news",
+      "summary": "Tehran signals it could move to restrict the strait if sanctions tighten further."
+    },
+    {
+      "date": "2026-02-15",
+      "headline": "Tankers reroute as insurers hike Gulf war-risk premiums",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/economy/",
+      "kind": "news",
+      "summary": "Higher premiums push some operators to delay Hormuz transits."
+    },
+    {
+      "date": "2026-03-11",
+      "headline": "Reports of mine-laying near key shipping lane spook crude markets",
+      "source": "X/@TankerTrackers",
+      "url": "https://x.com/TankerTrackers",
+      "kind": "social",
+      "summary": "OSINT account flags unusual small-boat activity at the strait's narrowest point."
+    },
+    {
+      "date": "2026-03-23",
+      "headline": "Strait of Hormuz traffic drops sharply after naval incident",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/business/energy/",
+      "kind": "news",
+      "summary": "Satellite operators report fewer transits in the 48 hours after a reported clash."
+    },
+    {
+      "date": "2026-04-04",
+      "headline": "Brent spikes toward $120 on Hormuz closure fears",
+      "source": "Bloomberg",
+      "url": "https://www.bloomberg.com/energy",
+      "kind": "news",
+      "summary": "Crude rallies as traders price in a partial chokepoint disruption."
+    },
+    {
+      "date": "2026-05-22",
+      "headline": "De-escalation talks lift sentiment as transits partly resume",
+      "source": "X/@AuroraIntel",
+      "url": "https://x.com/AuroraIntel",
+      "kind": "social",
+      "summary": "OSINT feeds note returning AIS pings and steadier vessel counts through the strait."
+    }
+  ]
+}

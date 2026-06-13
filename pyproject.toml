@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hormuz"
+version = "0.1.0"
+description = "Strait of Hormuz vessel-traffic detection from Sentinel-1 SAR, verified by Claude vision."
+requires-python = ">=3.12"
+dynamic = ["dependencies"]
+
+[project.scripts]
+hormuz = "hormuz.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

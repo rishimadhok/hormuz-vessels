@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strait of Hormuz — Vessel Detection</title>
+  <meta name="description" content="SAR vessel detection over the Strait of Hormuz: model-detected ships on Sentinel-1, traffic over time, and an analyst brief." />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="sample-badge" class="sample-badge" hidden>SAMPLE DATA</div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div>
+          <h1>Strait of Hormuz — Vessel Detection</h1>
+          <p class="sub">SAR ship detection on Sentinel-1 GRD, verified by Claude vision.</p>
+        </div>
+      </div>
+      <div id="run-meta" class="run-meta" aria-live="polite"></div>
+      <nav class="site-nav"><a href="map.html">Map →</a><a href="verify.html">Verify detections →</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ SECTION 1: HERO — the detection scene ============ -->
+    <section id="hero" class="section hero">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>1 · Detection on a SAR scene</h2>
+          <p class="lede">
+            The pipeline runs CFAR detection on a Sentinel-1 SAR scene, then asks Claude
+            to classify each bright return. Colored boxes mark the model's verdicts.
+          </p>
+        </div>
+
+        <div class="hero-grid">
+          <figure class="scene">
+            <div class="scene-frame" id="scene-frame">
+              <img id="overlay-img" alt="Annotated SAR scene with detection boxes" />
+              <div id="overlay-fallback" class="overlay-fallback" hidden>
+                <p>No annotated scene available yet.</p>
+                <p class="muted">Run the pipeline to generate <code>*_overlay.png</code>.</p>
+              </div>
+            </div>
+            <figcaption>
+              <span class="legend">
+                <span class="dot dot-vessel"></span>vessel
+                <span class="dot dot-rig"></span>rig
+                <span class="dot dot-island"></span>island
+                <span class="dot dot-noise"></span>noise
+              </span>
+              <span id="scene-caption" class="scene-caption"></span>
+            </figcaption>
+          </figure>
+
+          <div class="verdicts">
+            <div class="verdicts-head">
+              <h3>Claude's verdicts</h3>
+              <span id="verdict-counts" class="counts"></span>
+            </div>
+            <p class="muted small" id="verdicts-note"></p>
+            <ul id="verdict-list" class="verdict-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2: TRAFFIC CHART ============ -->
+    <section id="traffic" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>2 · Traffic vs. price over time</h2>
+          <p class="lede">
+            Detected moving vessels per Sentinel-1 pass against Brent crude.
+            Vertical markers flag timeline events (strait open / closed / incident).
+          </p>
+        </div>
+        <div class="chart-card">
+          <canvas id="traffic-chart" height="120" aria-label="Detected moving vessels and Brent crude price over time"></canvas>
+          <div id="chart-empty" class="chart-empty" hidden>No time-series data yet.</div>
+        </div>
+        <p id="chart-caption" class="chart-caption">Detected moving vessels per Sentinel-1 pass (static islands/rigs filtered out) vs Brent crude. Counts are corridor detections, human-verification pending.</p>
+        <ul id="event-legend" class="event-legend"></ul>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3: SIGNALS — news & market ============ -->
+    <section id="signals" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>3 · Signals — news &amp; market</h2>
+          <p class="lede">Headlines that moved the market, aligned to detected traffic and Brent crude.</p>
+        </div>
+        <ul id="news-feed" class="news-feed"></ul>
+        <p id="news-empty" class="muted small" hidden>No signals loaded.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 4: ANALYST BRIEF ============ -->
+    <section id="brief" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>4 · Analyst brief</h2>
+        </div>
+        <article id="brief-body" class="brief-body">
+          <p class="muted">Loading brief…</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Sentinel-1 GRD via Microsoft Planetary Computer · CFAR detection · Claude vision verification.</p>
+      <p class="muted small">Static render of pre-computed pipeline artifacts. No backend.</p>
+    </div>
+  </footer>
+
+  <!-- Chart.js from CDN; app.js degrades to an inline SVG chart if it fails to load -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

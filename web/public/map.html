@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map — Strait of Hormuz Vessel Detections</title>
+  <meta name="description" content="Geographic map of SAR vessel candidate detections on a satellite basemap, for visual geolocation verification." />
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="map.css" />
+</head>
+<body class="map-body">
+
+  <!-- ============ SLIM HEADER ============ -->
+  <header class="site-header map-header">
+    <div class="wrap">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div>
+          <h1>Detection map</h1>
+          <p class="sub">Verify each SAR candidate sits on the water in the right place.</p>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="index.html">← Report</a>
+        <a href="verify.html">Verify →</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ MAP + OVERLAYS ============ -->
+  <main class="map-main">
+    <div id="map" class="map-canvas" role="application" aria-label="Detection map"></div>
+
+    <!-- Legend / context overlay (top-left) -->
+    <div class="map-legend" id="map-legend" hidden>
+      <p class="ml-region" id="ml-region">Loading…</p>
+
+      <!-- Multi-timestep summary (hidden for single-date data) -->
+      <p class="ml-summary" id="ml-summary" hidden></p>
+
+      <!-- Date stepper (Prev / Next + dropdown + range slider).
+           Hidden by map.js when there is only one date. -->
+      <div class="date-stepper" id="date-stepper" hidden>
+        <div class="ds-row">
+          <button type="button" class="ds-btn" id="ds-prev" aria-label="Previous date">‹ Prev</button>
+          <select class="ds-select" id="ds-select" aria-label="Active date"></select>
+          <button type="button" class="ds-btn" id="ds-next" aria-label="Next date">Next ›</button>
+        </div>
+        <input type="range" class="ds-slider" id="ds-slider" min="0" max="0" step="1" value="0"
+               aria-label="Date slider" />
+      </div>
+
+      <div class="ml-meta">
+        <span class="ml-item" id="ml-date"></span>
+        <span class="status-badge" id="ml-status">Strait: —</span>
+      </div>
+      <p class="ml-item ml-count" id="ml-count"></p>
+      <!-- Crude oil price panel (filled by map.js from artifacts/oil.json) -->
+      <div class="ml-oil" id="ml-oil" hidden>
+        <div class="oil-head">
+          <span class="oil-title">CRUDE</span>
+          <span class="oil-date" id="oil-date"></span>
+        </div>
+        <div class="oil-rows" id="oil-rows">
+          <div class="oil-row">
+            <span class="oil-label oil-brent">Brent</span>
+            <span class="oil-price" id="oil-brent">—</span>
+          </div>
+          <div class="oil-row">
+            <span class="oil-label oil-wti">WTI</span>
+            <span class="oil-price" id="oil-wti">—</span>
+          </div>
+        </div>
+        <p class="oil-na" id="oil-na" hidden>Oil price: n/a for this date</p>
+        <p class="oil-src">Source: EIA spot (datahub.io, ODC-PDDL)</p>
+      </div>
+
+      <!-- Hide static (islands/rigs) toggle. map.js hides this row when the
+           dataset has no static features. Default = shown (unchecked). -->
+      <label class="ds-toggle" id="ml-static-toggle" hidden>
+        <input type="checkbox" id="ds-hide-static" />
+        <span>Hide static (islands/rigs)</span>
+      </label>
+
+      <button type="button" class="btn-zoom" id="btn-zoom-det">Zoom to detections</button>
+      <ul class="ml-key" id="ml-key">
+        <li><span class="key-swatch key-moving"></span>moving (vessel)</li>
+        <li><span class="key-swatch key-static"></span>static (island/rig)</li>
+        <li><span class="key-swatch" data-label="unverified"></span>unverified</li>
+        <li><span class="key-swatch" data-label="vessel"></span>vessel</li>
+        <li><span class="key-swatch" data-label="island"></span>island</li>
+        <li><span class="key-swatch" data-label="rig"></span>rig</li>
+        <li><span class="key-swatch" data-label="noise"></span>noise</li>
+        <li><span class="key-swatch key-aoi"></span>AOI footprint</li>
+      </ul>
+      <p class="ml-note">Static = bright returns at the same coordinates across multiple passes — fixed features, not ships.</p>
+      <p class="ml-note">Boxes are SAR-detected vessel candidates; zoom in to inspect each on satellite imagery.</p>
+    </div>
+
+    <!-- Hard failure message (shown only if Leaflet fails to load) -->
+    <div class="map-error" id="map-error" hidden>
+      <div class="map-error-inner">
+        <h2>Map unavailable</h2>
+        <p id="map-error-msg">The map library failed to load. Check your connection and reload.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Leaflet from CDN; map.js degrades gracefully if it fails to load -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="map.js"></script>
+</body>
+</html>

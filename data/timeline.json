@@ -1,0 +1,143 @@
+{
+  "strait": "Hormuz",
+  "compiled_at": "2026-06-13",
+  "verified_by_human": false,
+  "note": "Compiled from public reporting (Al Jazeera, Euronews, India's official news service NewsOnAir, UK House of Commons Library, US Federal Reserve Bank of Dallas, CNBC citing Lloyd's List Intelligence/Kpler) covering ~28 Feb 2026 through 13 Jun 2026. Several specific vessel-attack incidents are aggregated by reporting and individual ship names were not independently verified for this file; per-incident vessel claims (largely sourced via the Wikipedia '2026 Strait of Hormuz crisis' article) were therefore EXCLUDED and only milestone events with corroborating wire/trade/official reporting are included. CNN and the UK Parliament PDF could not be fetched (geoblock / 403) but their search-surfaced facts are consistent with the included sources. Awaiting human verification.",
+  "events": [
+    {
+      "date": "2026-02-28",
+      "type": "escalation",
+      "title": "US-Israel strikes on Iran begin",
+      "description": "The United States and Israel began a series of strikes against Iran on 28 February 2026; Iran's supreme leader Ali Khamenei was reported killed, triggering the chain of events that disrupted the Strait of Hormuz.",
+      "confidence": "high",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/6/11/iran-shuts-hormuz-strait-but-wasnt-it-already-closed"}
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "type": "closure",
+      "title": "IRGC declares Strait of Hormuz closed",
+      "description": "Iran's Revolutionary Guard Corps confirmed the Strait of Hormuz was closed and warned that vessels attempting passage could be attacked.",
+      "confidence": "high",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/6/11/iran-shuts-hormuz-strait-but-wasnt-it-already-closed"},
+        {"name": "Al Jazeera (shipping at a trickle)", "url": "https://www.aljazeera.com/economy/2026/4/10/shipping-in-strait-of-hormuz-at-a-trickle-despite-us-iran-ceasefire"}
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "type": "disruption",
+      "title": "Major carriers suspend transits; attacks reported",
+      "description": "Within roughly 48 hours of the closure, Maersk, MSC, CMA CGM and Hapag-Lloyd suspended transits, and UKMTO reported more than a dozen attacks on ships in and around the strait.",
+      "confidence": "high",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/6/11/iran-shuts-hormuz-strait-but-wasnt-it-already-closed"}
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "type": "disruption",
+      "title": "Transit volumes collapse; economic impact assessed",
+      "description": "By mid-to-late March, traffic had fallen sharply from a pre-conflict baseline of roughly 3,000 vessels per month (~120-140 transits/day); a Dallas Fed analysis assessed the economic implications of the effective Hormuz closure, through which ~20% of global oil and LNG normally pass.",
+      "confidence": "medium",
+      "sources": [
+        {"name": "Federal Reserve Bank of Dallas", "url": "https://www.dallasfed.org/research/economics/2026/0320"},
+        {"name": "Al Jazeera (shipping at a trickle)", "url": "https://www.aljazeera.com/economy/2026/4/10/shipping-in-strait-of-hormuz-at-a-trickle-despite-us-iran-ceasefire"}
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "type": "incident",
+      "title": "Limited Indian LPG tankers transit under Iranian coordination",
+      "description": "Two Indian-flagged LPG carriers (BW TYR and BW ELM) carrying 94,000 tonnes of LPG crossed the strait after coordinating with Iranian authorities, part of a small set of 'non-hostile' vessels permitted through in March.",
+      "confidence": "high",
+      "sources": [
+        {"name": "NewsOnAir (India, official)", "url": "https://www.newsonair.gov.in/two-more-indian-tankers-carrying-94000-tonnes-of-lpg-cross-strait-of-hormuz"}
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "type": "reopen",
+      "title": "US-Iran ceasefire framework; US says strait to reopen",
+      "description": "A two-week pause in US-Iran fighting was announced and US Secretary of War Pete Hegseth said 'the Strait of Hormuz is now open and commerce will flow,' contingent on Iran ensuring safe passage.",
+      "confidence": "high",
+      "sources": [
+        {"name": "NewsOnAir (India, official)", "url": "https://www.newsonair.gov.in/us-says-strait-of-hormuz-set-to-open-for-commercial-shipping"},
+        {"name": "Euronews", "url": "https://euronews.com/2026/04/08/iran-closes-strait-of-hormuz-in-response-to-israeli-strikes-on-lebanon-state-media-say"}
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "type": "closure",
+      "title": "Iran halts transit again citing Israeli strikes on Lebanon",
+      "description": "On the same day the ceasefire took effect, Iran stopped traffic through the strait in response to Israeli airstrikes on Lebanon; after two tankers were initially allowed through, Fars reported traffic was halted, which the White House called 'completely unacceptable.'",
+      "confidence": "high",
+      "sources": [
+        {"name": "Euronews", "url": "https://euronews.com/2026/04/08/iran-closes-strait-of-hormuz-in-response-to-israeli-strikes-on-lebanon-state-media-say"}
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "type": "disruption",
+      "title": "Transit at a trickle; hundreds of vessels stranded",
+      "description": "Only single-digit numbers of vessels were crossing daily (5 on Wednesday, 7 on Thursday) while Lloyd's List Intelligence reported more than 600 vessels, including 325 tankers, stranded in the Gulf; Kpler estimated safe capacity at a maximum 10-15 passages/day if the ceasefire held.",
+      "confidence": "high",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/economy/2026/4/10/shipping-in-strait-of-hormuz-at-a-trickle-despite-us-iran-ceasefire"}
+      ]
+    },
+    {
+      "date": "2026-04-13",
+      "type": "escalation",
+      "title": "US imposes naval blockade on Iran",
+      "description": "Following the failure of US-Iran ('Islamabad') talks, the United States imposed a naval blockade on Iran on 13 April 2026, further restricting movement through and around the strait.",
+      "confidence": "medium",
+      "sources": [
+        {"name": "Wikipedia (2026 US naval blockade of Iran)", "url": "https://en.wikipedia.org/wiki/2026_United_States_naval_blockade_of_Iran"},
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/6/11/iran-shuts-hormuz-strait-but-wasnt-it-already-closed"}
+      ]
+    },
+    {
+      "date": "2026-05-06",
+      "type": "disruption",
+      "title": "Tens of thousands of mariners reported trapped",
+      "description": "US Joint Chiefs Chairman Gen. Dan Caine said about 22,500 mariners were trapped on more than 1,550 commercial vessels in and around the strait; Lloyd's List reported traffic fell to the lowest point of the war in May with mainstream vessels increasingly 'going dark.'",
+      "confidence": "medium",
+      "sources": [
+        {"name": "Lloyd's List (via search)", "url": "https://www.lloydslist.com/hot-topics/strait-of-hormuz-crisis"},
+        {"name": "Al Jazeera (when will it be safe)", "url": "https://www.aljazeera.com/features/2026/4/28/when-will-strait-of-hormuz-be-safe-for-commercial-shipping-again"}
+      ]
+    },
+    {
+      "date": "2026-06-04",
+      "type": "deescalation",
+      "title": "Stranded ships quietly exit via US Navy coordination",
+      "description": "Lloyd's List Intelligence reported (via CNBC) that nearly 40 vessels previously stranded in the Persian Gulf had exited through the strait over about three weeks by quietly coordinating with the US Navy.",
+      "confidence": "medium",
+      "sources": [
+        {"name": "CNBC", "url": "https://www.cnbc.com/2026/06/04/iran-war-strait-hormuz-persian-gulf-oil-tanker-transit.html"}
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "type": "escalation",
+      "title": "US strikes Bandar Abbas and Qeshm Island",
+      "description": "Amid stalled negotiations, US military strikes hit Bandar Abbas and Qeshm Island on 10 June 2026, prompting Iranian drone and missile retaliation and renewed threats to the strait.",
+      "confidence": "medium",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/6/11/iran-shuts-hormuz-strait-but-wasnt-it-already-closed"}
+      ]
+    },
+    {
+      "date": "2026-06-11",
+      "type": "closure",
+      "title": "Iran declares strait 'completely closed'",
+      "description": "Iran's military declared the Strait of Hormuz completely closed to all oil tankers and commercial ships and said any vessel attempting passage would be fired upon, though US Central Command said some ships were still getting through.",
+      "confidence": "high",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/6/11/iran-shuts-hormuz-strait-but-wasnt-it-already-closed"}
+      ]
+    }
+  ]
+}

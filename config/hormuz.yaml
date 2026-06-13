@@ -1,0 +1,48 @@
+# Strait of Hormuz vessel-detection pipeline config.
+# Every value here is overridable on the CLI (e.g. --bbox, --start, --end).
+
+# Area of interest, [min_lon, min_lat, max_lon, max_lat] in EPSG:4326.
+# Default: the Strait of Hormuz shipping corridor.
+bbox: [55.9, 26.3, 57.1, 27.1]
+
+# Date range (inclusive), ISO yyyy-mm-dd.
+start: "2026-02-15"
+end: "2026-06-13"
+
+# Microsoft Planetary Computer STAC.
+stac_url: "https://planetarycomputer.microsoft.com/api/stac/v1"
+collection: "sentinel-1-grd"     # anonymous-signable; RTC requires an account
+polarization: "vh"               # VH = best ship/sea contrast for CFAR
+instrument_mode: "IW"            # standard maritime-surveillance mode
+
+# CFAR (CA-CFAR) parameters. Pixel sizes assume ~10 m/px Sentinel-1 GRD.
+cfar:
+  pfa: 1.0e-5                    # target probability of false alarm
+  guard_px: 9                    # guard window (must exceed largest vessel)
+  bg_px: 31                      # outer/background window
+  min_area_px: 4                 # drop speckle below this blob area
+  max_area_px: 4000              # drop very large blobs (land leakage)
+
+# Land/island masking.
+landmask:
+  source: "natural_earth"        # NE 10m land + minor-islands (Phase 1). OSM = Phase-3 swap.
+  dilate_px: 3                   # grow mask to suppress bright coastline/ports
+
+# Chip extraction for the vision pass.
+chip_px: 64
+
+# Cap how many candidates per scene get the (paid) Opus vision pass. Selects the
+# strongest by max intensity; logs when it caps so coverage is never silently lost.
+# Set null to verify every candidate.
+max_candidates_per_scene: 75
+
+# Claude vision + brief.
+model: "claude-opus-4-8"
+use_batches: true                # Message Batches API for the per-scene chip set
+
+# Phase-1 vertical-slice cap: only process the first N scenes found.
+# Set to null for full runs (Phase 2+).
+max_scenes: 5
+
+# Output.
+artifacts_dir: "artifacts"

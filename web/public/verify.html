@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify detections — Strait of Hormuz</title>
+  <meta name="description" content="Human verification portal: label each SAR vessel candidate by eye." />
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="verify.css" />
+</head>
+<body class="verify-body">
+
+  <!-- ============ CONTEXT / HEADER BAR ============ -->
+  <header class="site-header verify-header">
+    <div class="wrap">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div>
+          <h1>Human verification</h1>
+          <p class="sub" id="ctx-region">Loading scene…</p>
+        </div>
+      </div>
+      <div class="verify-ctx" id="ctx-meta" aria-live="polite">
+        <span class="ctx-item" id="ctx-date"></span>
+        <span class="badge badge-status" id="ctx-status">Strait: —</span>
+        <span class="ctx-item ctx-count" id="ctx-count"></span>
+        <a class="ctx-link" href="map.html">Map →</a>
+        <a class="ctx-link" href="index.html">← Back to report</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="verify-main">
+    <div class="wrap">
+
+      <!-- ============ MAP ============ -->
+      <section class="verify-map-wrap" id="map-section">
+        <div id="map" class="verify-map" role="application" aria-label="Detection map"></div>
+        <p class="map-fallback muted small" id="map-fallback" hidden>
+          Map unavailable (offline or tiles blocked). Labeling below still works.
+        </p>
+      </section>
+
+      <!-- ============ GRID ============ -->
+      <section class="verify-grid-wrap">
+        <div class="grid-head">
+          <h2>Candidates</h2>
+          <p class="muted small">
+            Click a label or use keyboard <kbd>v</kbd> vessel · <kbd>i</kbd> island ·
+            <kbd>r</kbd> rig · <kbd>n</kbd> noise · <kbd>u</kbd> unsure while a card is focused.
+          </p>
+        </div>
+        <div id="grid" class="cand-grid" aria-live="polite"></div>
+        <p id="grid-empty" class="muted" hidden>No detections loaded.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============ STICKY SUMMARY BAR ============ -->
+  <div class="summary-bar" id="summary-bar">
+    <div class="wrap summary-inner">
+      <div class="summary-counts" id="summary-counts"></div>
+      <div class="summary-progress">
+        <span class="summary-verified" id="summary-verified">0 of 0 verified</span>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+      <div class="summary-actions">
+        <button type="button" class="btn btn-ghost" id="btn-bulk-vessel">Mark remaining: Vessel</button>
+        <button type="button" class="btn btn-ghost" id="btn-reset">Reset labels</button>
+        <button type="button" class="btn btn-accent" id="btn-export-json">Download detections.json</button>
+        <button type="button" class="btn btn-accent" id="btn-export-csv">Download CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet from CDN; verify.js degrades gracefully if it fails to load -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="verify.js"></script>
+</body>
+</html>

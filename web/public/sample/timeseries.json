@@ -1,0 +1,14 @@
+{
+  "series": [
+    { "date": "2026-02-16", "scene_count": 1, "candidate_count": 465, "vessel_count": 38 },
+    { "date": "2026-02-28", "scene_count": 1, "candidate_count": 502, "vessel_count": 41 },
+    { "date": "2026-03-12", "scene_count": 1, "candidate_count": 488, "vessel_count": 44 },
+    { "date": "2026-03-24", "scene_count": 2, "candidate_count": 610, "vessel_count": 52 },
+    { "date": "2026-04-05", "scene_count": 1, "candidate_count": 540, "vessel_count": 49 },
+    { "date": "2026-04-17", "scene_count": 1, "candidate_count": 470, "vessel_count": 31 },
+    { "date": "2026-04-29", "scene_count": 1, "candidate_count": 210, "vessel_count": 9 },
+    { "date": "2026-05-11", "scene_count": 1, "candidate_count": 188, "vessel_count": 7 },
+    { "date": "2026-05-23", "scene_count": 1, "candidate_count": 433, "vessel_count": 36 },
+    { "date": "2026-06-04", "scene_count": 1, "candidate_count": 497, "vessel_count": 43 }
+  ]
+}

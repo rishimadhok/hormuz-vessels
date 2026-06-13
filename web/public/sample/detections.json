@@ -1,0 +1,87 @@
+{
+  "bbox": [55.9, 26.3, 57.1, 27.1],
+  "start": "2026-02-15",
+  "end": "2026-06-13",
+  "collection": "sentinel-1-grd",
+  "count": 6,
+  "detections": [
+    {
+      "scene_id": "S1A_SAMPLE_20260216T0215",
+      "date": "2026-02-16",
+      "datetime": "2026-02-16T02:15:22+00:00",
+      "lon": 56.4123,
+      "lat": 26.7841,
+      "area_px": 142,
+      "max_intensity": 2841920.0,
+      "label": "vessel",
+      "confidence": 0.93,
+      "reasoning": "Elongated bright return ~250 m long with a clear wake and azimuth ambiguity ghost typical of a moving ship. Off the shipping lane, consistent with a laden tanker transiting outbound.",
+      "chip": "chips/S1A_SAMPLE_20260216T0215_000.png"
+    },
+    {
+      "scene_id": "S1A_SAMPLE_20260216T0215",
+      "date": "2026-02-16",
+      "datetime": "2026-02-16T02:15:22+00:00",
+      "lon": 56.5530,
+      "lat": 26.6612,
+      "area_px": 88,
+      "max_intensity": 1990400.0,
+      "label": "vessel",
+      "confidence": 0.88,
+      "reasoning": "Compact high-intensity blob in the inbound lane with no fixed-structure context. Size and shape match a mid-size cargo vessel at anchor near the anchorage zone.",
+      "chip": "chips/S1A_SAMPLE_20260216T0215_001.png"
+    },
+    {
+      "scene_id": "S1A_SAMPLE_20260216T0215",
+      "date": "2026-02-16",
+      "datetime": "2026-02-16T02:15:22+00:00",
+      "lon": 56.2010,
+      "lat": 26.9450,
+      "area_px": 64,
+      "max_intensity": 1554300.0,
+      "label": "rig",
+      "confidence": 0.81,
+      "reasoning": "Persistent bright cluster at fixed coordinates present across multiple passes, with strong corner-reflector returns. Matches a known offshore platform; not a vessel.",
+      "chip": "chips/S1A_SAMPLE_20260216T0215_002.png"
+    },
+    {
+      "scene_id": "S1A_SAMPLE_20260216T0215",
+      "date": "2026-02-16",
+      "datetime": "2026-02-16T02:15:22+00:00",
+      "lon": 56.0510,
+      "lat": 27.1005,
+      "area_px": 310,
+      "max_intensity": 980200.0,
+      "label": "island",
+      "confidence": 0.9,
+      "reasoning": "Large irregular high-backscatter region attached to the coastline outline, far exceeding any vessel footprint. Land/island leakage not caught by the Natural Earth 10m mask.",
+      "chip": "chips/S1A_SAMPLE_20260216T0215_003.png"
+    },
+    {
+      "scene_id": "S1A_SAMPLE_20260216T0215",
+      "date": "2026-02-16",
+      "datetime": "2026-02-16T02:15:22+00:00",
+      "lon": 56.6700,
+      "lat": 26.5200,
+      "area_px": 5,
+      "max_intensity": 421000.0,
+      "label": "noise",
+      "confidence": 0.72,
+      "reasoning": "Single-pixel-scale flash in open water with no surrounding structure or wake. Consistent with sea-clutter speckle or an ambiguity sidelobe, not a real target.",
+      "chip": "chips/S1A_SAMPLE_20260216T0215_004.png"
+    },
+    {
+      "scene_id": "S1A_SAMPLE_20260216T0215",
+      "date": "2026-02-16",
+      "datetime": "2026-02-16T02:15:22+00:00",
+      "lon": 56.4890,
+      "lat": 26.7100,
+      "area_px": 51,
+      "max_intensity": 1320000.0,
+      "label": "vessel",
+      "confidence": 0.79,
+      "reasoning": "Bright target in the traffic separation scheme with faint wake. Likely a smaller cargo or support vessel underway.",
+      "chip": "chips/S1A_SAMPLE_20260216T0215_005.png"
+    }
+  ]
+}

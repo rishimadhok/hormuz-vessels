@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+*.egg-info/
+.pytest_cache/
+.gstack/
+.vercel/
+
+# Downloaded reference data (regenerated on first run)
+data/land/
+data/news.json
+
+# Generated pipeline output (regenerate with run_all.sh)
+artifacts/
+
+# Web app: synced artifacts (generated; deployed directly via Vercel CLI)
+web/public/artifacts/
+web/public/data/
+
+# Local Claude Code state
+.claude/
