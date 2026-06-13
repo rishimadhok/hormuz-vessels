@@ -1,6 +1,6 @@
 # Strait of Hormuz — Vessel-Traffic Detection from Sentinel-1 SAR
 
-**Live demo:** https://hormuz-vessels-demo-rishi-terrabyte-projects.vercel.app
+**Live demo:** https://hormuz-vessels-demo.vercel.app
 
 A **multi-intelligence platform** for the Strait of Hormuz that fuses three open signals
 into one trader-facing view: **satellite** (detected vessel traffic), **market** (Brent/WTI
